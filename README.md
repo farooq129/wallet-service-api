@@ -1,102 +1,161 @@
-Wallet Service API
+<h1>💼 Wallet Service API</h1>
 
-A robust, purely backend REST API simulating a Wallet Service. This system allows for the creation of wallets, processing of deposits and withdrawals, and atomic transfers between wallets.
+<p>
+A robust, backend-only REST API that simulates a digital wallet system.
+This service enables wallet creation, deposits, withdrawals, and secure fund transfers
+with strong data integrity and scalability principles.
+</p>
 
-Architectural Decisions
+<hr/>
 
-This project follows a strict Layered Architecture (Repository-Service Pattern) to ensure maintainability, scalability, and data integrity:
+<h2>🚀 Features</h2>
+<ul>
+  <li>Create and manage wallets</li>
+  <li>Deposit and withdraw funds</li>
+  <li>Atomic transfers between wallets</li>
+  <li>Transaction history tracking</li>
+  <li>Idempotent API operations</li>
+  <li>High precision monetary handling</li>
+</ul>
 
-Controllers: Handle HTTP requests and input validation.
+<hr/>
 
-Services: Contain the core business logic, ensuring atomicity via database transactions and handling idempotency checks.
+<h2>🏗️ Architecture</h2>
 
-Repositories: Manage all database interactions, keeping queries isolated and reusable.
+<p>This project follows a <strong>Layered Architecture (Repository-Service Pattern)</strong>:</p>
 
-Data Transfer Objects (DTOs): Ensure strongly typed data is passed between layers (e.g., TransferDTO).
+<ul>
+  <li><strong>Controllers:</strong> Handle HTTP requests and input validation</li>
+  <li><strong>Services:</strong> Contain business logic and ensure atomic operations</li>
+  <li><strong>Repositories:</strong> Manage database interactions</li>
+  <li><strong>DTOs:</strong> Ensure structured data transfer (e.g., TransferDTO)</li>
+</ul>
 
-Core Business Rules Implemented
+<hr/>
 
-Monetary Precision: All balances and amounts are stored and processed as integers (minor units/cents) to prevent floating-point inaccuracies.
+<h2>⚙️ Core Business Rules</h2>
 
-Atomicity & Concurrency: Database transactions (DB::transaction) and row-level locking (lockForUpdate) are utilized to prevent race conditions and ensure complete atomic transfers.
+<h3>💰 Monetary Precision</h3>
+<p>
+All balances and amounts are stored as integers (minor units/cents) to prevent floating-point inaccuracies.
+</p>
 
-Idempotency: Deposit, withdrawal, and transfer endpoints support Idempotency-Key headers to safely handle retries without duplicating transactions.
+<h3>🔒 Atomicity & Concurrency</h3>
+<p>
+Uses database transactions (<code>DB::transaction</code>) and row-level locking (<code>lockForUpdate</code>)
+to prevent race conditions and ensure safe transfers.
+</p>
 
-Double-Entry Accounting: Transfers securely log both the debit (transfer_out) and credit (transfer_in) sides of the transaction.
+<h3>🔁 Idempotency</h3>
+<p>
+Supports <code>Idempotency-Key</code> headers to safely retry requests without duplicating transactions.
+</p>
 
-Setup Instructions
+<h3>📊 Double-Entry Accounting</h3>
+<p>
+Each transfer logs both:
+</p>
+<ul>
+  <li><code>transfer_out</code> (debit)</li>
+  <li><code>transfer_in</code> (credit)</li>
+</ul>
 
-Prerequisites
+<hr/>
 
-PHP 8.2+
+<h2>🛠️ Setup Instructions</h2>
 
-Composer
+<h3>✅ Prerequisites</h3>
+<ul>
+  <li>PHP 8.2+</li>
+  <li>Composer</li>
+  <li>SQLite or MySQL</li>
+</ul>
 
-SQLite (or MySQL)
+<h3>📦 Installation</h3>
 
-Installation
-
-Clone the repository
-
-git clone <your-repository-url>
+<pre><code>git clone &lt;your-repository-url&gt;
 cd wallet-service-api
-
-
-Install dependencies
-
 composer install
+</code></pre>
 
+<h3>⚙️ Environment Setup</h3>
 
-Environment Setup
-
-cp .env.example .env
+<pre><code>cp .env.example .env
 php artisan key:generate
+</code></pre>
 
+<p><strong>Note:</strong> Default database is configured for SQLite.</p>
 
-Note: The default database is configured to SQLite for easy setup.
+<h3>🗄️ Run Migrations</h3>
 
-Run Database Migrations
+<pre><code>php artisan migrate
+</code></pre>
 
-php artisan migrate
+<h3>▶️ Start Server</h3>
 
+<pre><code>php artisan serve
+</code></pre>
 
-Start the Local Server
+<p>API will be available at:</p>
 
-php artisan serve
+<pre><code>http://127.0.0.1:8000</code></pre>
 
+<hr/>
 
-The API will be accessible at http://127.0.0.1:8000.
+<h2>📡 API Endpoints</h2>
 
-API Endpoints Overview
+<p>A full Postman collection is included: <code>Wallet_Service_API.postman_collection.json</code></p>
 
-A full Postman collection (Wallet_Service_API.postman_collection.json) is included in the root of this repository for easy testing.
+<h3>🔹 Health & Wallets</h3>
+<ul>
+  <li><strong>GET</strong> /api/health - Check API status</li>
+  <li><strong>POST</strong> /api/wallets - Create wallet</li>
+  <li><strong>GET</strong> /api/wallets - List wallets</li>
+  <li><strong>GET</strong> /api/wallets/{id} - Wallet details</li>
+  <li><strong>GET</strong> /api/wallets/{id}/balance - Wallet balance</li>
+</ul>
 
-1. Health & Wallets
+<h3>🔹 Transactions</h3>
+<ul>
+  <li><strong>POST</strong> /api/wallets/{id}/deposit - Deposit funds</li>
+  <li><strong>POST</strong> /api/wallets/{id}/withdraw - Withdraw funds</li>
+  <li><strong>POST</strong> /api/transfers - Transfer funds</li>
+  <li><strong>GET</strong> /api/wallets/{id}/transactions - Transaction history</li>
+</ul>
 
-GET /api/health - Check API status.
+<hr/>
 
-POST /api/wallets - Create a new wallet.
+<h2>📈 Future Improvements</h2>
 
-GET /api/wallets - List all wallets.
+<h3>⚡ Performance & Scaling</h3>
+<ul>
+  <li>Queue system (Redis / RabbitMQ)</li>
+  <li>Background jobs for reports and notifications</li>
+</ul>
 
-GET /api/wallets/{id} - Get specific wallet details.
+<h3>🗄️ Database Scaling</h3>
+<ul>
+  <li>Switch to PostgreSQL / MySQL</li>
+  <li>Implement read replicas</li>
+</ul>
 
-GET /api/wallets/{id}/balance - Get wallet balance.
+<h3>🔐 Authentication</h3>
+<ul>
+  <li>Integrate Laravel Sanctum or Passport</li>
+  <li>Secure APIs using Bearer tokens</li>
+</ul>
 
-2. Transactions
+<hr/>
 
-POST /api/wallets/{id}/deposit - Add funds.
+<h2>🤝 Contributing</h2>
+<p>Contributions are welcome! Feel free to open issues or submit pull requests.</p>
 
-POST /api/wallets/{id}/withdraw - Remove funds.
+<hr/>
 
-POST /api/transfers - Move funds between wallets.
+<h2>📄 License</h2>
+<p>This project is open-source and available under the MIT License.</p>
 
-GET /api/wallets/{id}/transactions - View wallet history.
+<hr/>
 
-Future Improvements & Scaling Considerations
-
-Queue System: Offload the generation of transaction history reports or email receipts to background jobs (Redis/RabbitMQ).
-
-Database Scaling: Switch from SQLite to PostgreSQL/MySQL and implement read replicas for high-traffic GET requests (like balance checks).
-
-Authentication: Implement Laravel Sanctum or Passport to secure the endpoints using Bearer tokens once the service is ready for production.
+<h2>⭐ Support</h2>
+<p>If you find this project useful, consider giving it a star on GitHub.</p>
