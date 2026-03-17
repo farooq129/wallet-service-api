@@ -125,37 +125,4 @@ php artisan key:generate
 
 <hr/>
 
-<h2>📈 Future Improvements</h2>
 
-<h3>⚡ Performance & Scaling</h3>
-<ul>
-  <li>Queue system (Redis / RabbitMQ)</li>
-  <li>Background jobs for reports and notifications</li>
-</ul>
-
-<h3>🗄️ Database Scaling</h3>
-<ul>
-  <li>Switch to PostgreSQL / MySQL</li>
-  <li>Implement read replicas</li>
-</ul>
-
-<h3>🔐 Authentication</h3>
-<ul>
-  <li>Integrate Laravel Sanctum or Passport</li>
-  <li>Secure APIs using Bearer tokens</li>
-</ul>
-
-<hr/>
-
-<h2>🤝 Contributing</h2>
-<p>Contributions are welcome! Feel free to open issues or submit pull requests.</p>
-
-<hr/>
-
-<h2>📄 License</h2>
-<p>This project is open-source and available under the MIT License.</p>
-
-<hr/>
-
-<h2>⭐ Support</h2>
-<p>If you find this project useful, consider giving it a star on GitHub.</p>
